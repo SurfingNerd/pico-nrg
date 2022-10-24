@@ -49,7 +49,7 @@ fn main() -> ! {
 
     let mut delay_lcd = cortex_m::delay::Delay::new(core.SYST, clocks.system_clock.freq().raw());
 
-    const LCD_ADDRESS: u8 = 0x27; // Address depends on hardware, see link below
+    
     let mut current_lcd_address: u8 = 0;
     
     let pins = hal::gpio::Pins::new(
@@ -73,7 +73,10 @@ fn main() -> ! {
         .init();
         
         if let Ok(mut lcd) = lcd_result {
-            lcd.write_str("Hello!");
+            if let Ok(()) = lcd.set_cursor(0, 0) {
+                let _ = lcd.write_str("Hello!");
+            }
+            
         }
 
         // lcd.init();
@@ -91,10 +94,13 @@ fn main() -> ! {
         } else {
             led_pin.set_high().unwrap();
         }
-    
-        current_lcd_address += 1;
-
-        if current_lcd_address >= LCD_ADDRESS {
+        
+        // i2c has 128 adresses
+        // https://www.robot-electronics.co.uk/i2c-tutorial#:~:text=All%20I2C%20addresses%20are%20either,be%20from%200%20to%20127.
+        // we iterate the whole address space so we possible find the correct onw.
+        if current_lcd_address < 127 {
+            current_lcd_address += 1;
+        } else {
             current_lcd_address = 0;
         }
 
