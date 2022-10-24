@@ -61,7 +61,7 @@ fn main() -> ! {
 
     let mut led_pin = pins.gpio25.into_push_pull_output();
 
-    let mut i2c_lcd = i2c_pio::I2C::new(&mut pio, pins.gpio26, pins.gpio27, sm0, fugit::HertzU32::Hz(200_000), clocks.system_clock.freq());
+    let mut i2c_lcd = i2c_pio::I2C::new(&mut pio, pins.gpio26, pins.gpio27, sm0, fugit::HertzU32::Hz(100_000), clocks.system_clock.freq());
 
     // let mut delay = cortex_m::delay::Delay::new(core.SYST, clocks.system_clock.freq().raw());
     loop {
