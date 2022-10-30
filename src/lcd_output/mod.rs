@@ -23,8 +23,7 @@ use hal::{
 pub static BOOT2: [u8; 256] = rp2040_boot2::BOOT_LOADER_W25Q080;
 
 
-#[entry]
-fn main() -> ! {
+fn lcd_main() -> ! {
     
     
     let mut pac = pac::Peripherals::take().unwrap();
@@ -45,10 +44,13 @@ fn main() -> ! {
     .ok()
     .unwrap();
 
-    //let (mut pio, sm0, _, _, _) = pac.PIO0.split(&mut pac.RESETS);
+    let (mut pio, sm0, _, _, _) = pac.PIO0.split(&mut pac.RESETS);
 
-    let mut delay = cortex_m::delay::Delay::new(core.SYST, clocks.system_clock.freq().raw());
+    let mut delay_lcd = cortex_m::delay::Delay::new(core.SYST, clocks.system_clock.freq().raw());
 
+    
+    let mut current_lcd_address: u8 = 0;
+    
     let pins = hal::gpio::Pins::new(
         pac.IO_BANK0,
         pac.PADS_BANK0,
@@ -56,9 +58,7 @@ fn main() -> ! {
         &mut pac.RESETS,
     );
 
-    let mut led_pin = pins.gpio25.into_push_pull_output();
-
-    let mut pin_2_relais = pins.gpio2.into_push_pull_output();
+    // let mut led_pin = pins.gpio25.into_push_pull_output();
 
     // let mut i2c_lcd = i2c_pio::I2C::new(&mut pio, pins.gpio26, pins.gpio27, sm0, fugit::HertzU32::Hz(100_000), clocks.system_clock.freq());
 
@@ -91,13 +91,20 @@ fn main() -> ! {
         
         if led_pin.is_set_high().unwrap() {
             led_pin.set_low().unwrap();
-            pin_2_relais.set_low().unwrap();
         } else {
             led_pin.set_high().unwrap();
-            pin_2_relais.set_high().unwrap();
         }
 
-        delay.delay_ms(5000);
+        delay.delay_ms(500);
         
+        // i2c has 128 adresses
+        // https://www.robot-electronics.co.uk/i2c-tutorial#:~:text=All%20I2C%20addresses%20are%20either,be%20from%200%20to%20127.
+        // we iterate the whole address space so we possible find the correct onw.
+        // if current_lcd_address < 127 {
+        //     current_lcd_address += 1;
+        // } else {
+        //     current_lcd_address = 0;
+        // }
+
     }
 }

@@ -21,9 +21,6 @@ dependencies = [
  "defmt-rtt",
  "embedded-hal",
  "embedded-time",
- "fugit",
- "i2c-pio",
- "lcd-lcm1602-i2c",
  "panic-halt",
  "panic-probe",
  "rp-pico",
@@ -230,20 +227,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "i2c-pio"
-version = "0.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2508bcce1400673105eeae0728967e15a780b57244bfc5d7fefbb4fbd2838add"
-dependencies = [
- "cortex-m",
- "embedded-hal",
- "fugit",
- "nb 1.0.0",
- "pio",
- "rp2040-hal",
-]
-
-[[package]]
 name = "itertools"
 version = "0.10.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -257,17 +240,6 @@ name = "lazy_static"
 version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
-
-[[package]]
-name = "lcd-lcm1602-i2c"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7c123f794fa6f8bfdace880a42e45c24cc996b72b633df7c2a27715b55651095"
-dependencies = [
- "embedded-hal",
- "ufmt",
- "ufmt-write",
-]
 
 [[package]]
 name = "memchr"
@@ -429,12 +401,6 @@ dependencies = [
  "quote",
  "version_check",
 ]
-
-[[package]]
-name = "proc-macro-hack"
-version = "0.5.19"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dbf0c48bc1d91375ae5c3cd81e3722dff1abcf81a30960240640d223f59fe0e5"
 
 [[package]]
 name = "proc-macro2"
@@ -602,35 +568,6 @@ dependencies = [
  "quote",
  "unicode-ident",
 ]
-
-[[package]]
-name = "ufmt"
-version = "0.1.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "31d3c0c63312dfc9d8e5c71114d617018a19f6058674003c0da29ee8d8036cdd"
-dependencies = [
- "proc-macro-hack",
- "ufmt-macros",
- "ufmt-write",
-]
-
-[[package]]
-name = "ufmt-macros"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e4ab6c92f30c996394a8bd525aef9f03ce01d0d7ac82d81902968057e37dd7d9"
-dependencies = [
- "proc-macro-hack",
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
-name = "ufmt-write"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e87a2ed6b42ec5e28cc3b94c09982969e9227600b2e3dcbc1db927a84c06bd69"
 
 [[package]]
 name = "unicode-ident"
