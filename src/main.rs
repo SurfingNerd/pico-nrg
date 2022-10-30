@@ -13,20 +13,17 @@ use rp2040_hal as hal;
 use hal::{
     clocks::{init_clocks_and_plls, Clock},
     pac,
+    prelude::_rphal_pio_PIOExt,
     watchdog::Watchdog,
-    Sio, prelude::_rphal_pio_PIOExt,
+    Sio,
 };
-
 
 #[link_section = ".boot2"]
 #[used]
 pub static BOOT2: [u8; 256] = rp2040_boot2::BOOT_LOADER_W25Q080;
 
-
 #[entry]
 fn main() -> ! {
-    
-    
     let mut pac = pac::Peripherals::take().unwrap();
     let core = pac::CorePeripherals::take().unwrap();
     let mut watchdog = Watchdog::new(pac.WATCHDOG);
@@ -64,31 +61,29 @@ fn main() -> ! {
 
     // let mut delay = cortex_m::delay::Delay::new(core.SYST, clocks.system_clock.freq().raw());
     loop {
-
         // let lcd_result = lcd_lcm1602_i2c::Lcd::new(&mut i2c_lcd, &mut delay_lcd)
         // .address(current_lcd_address)
         // .cursor_on(false) // no visible cursos
         // .rows(2) // two rows
         // .init();
-        
+
         // if let Ok(mut lcd) = lcd_result {
         //     if let Ok(()) = lcd.set_cursor(0, 0) {
         //         let _ = lcd.write_str("Hello!");
         //     }
-            
+
         // }
 
         // lcd.init();
-        
+
         // delay.delay_ms(500);
         // led_pin.set_low().unwrap();
         // lcd.write_str("low!");
-        
+
         // delay.delay_ms(500);
 
         // we add debug output to the lcd display.
 
-        
         if led_pin.is_set_high().unwrap() {
             led_pin.set_low().unwrap();
             pin_2_relais.set_low().unwrap();
@@ -98,6 +93,5 @@ fn main() -> ! {
         }
 
         delay.delay_ms(5000);
-        
     }
 }
